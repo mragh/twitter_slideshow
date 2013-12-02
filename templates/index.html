@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head><title>{{title}}</title>
+<style type="text/css">
+html {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #3E3E50;
+}
+
+.body {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.tweet {
+    position: absolute;
+    text-align: left;
+}
+.overview {
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.77) 0%, rgba(0,0,0,0.15) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.77)), color-stop(100%,rgba(0,0,0,0.15))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.77) 0%,rgba(0,0,0,0.15) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(0,0,0,0.77) 0%,rgba(0,0,0,0.15) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(0,0,0,0.77) 0%,rgba(0,0,0,0.15) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.77) 0%,rgba(0,0,0,0.15) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4000000', endColorstr='#26000000',GradientType=0 ); /* IE6-9 */
+}
+.photo {
+    width: {{image.width}}px;
+    height: {{image.height}}px;
+    background: #3E3E50 url({{image.url}});
+    background-size: 100%
+}
+.avatar {
+    height: 48px;
+    width: 48px;
+    background: url({{status.user.profile_image_url}});
+    display: inline-block;
+    margin-right: 15px;
+}
+.overview h1 {
+    display: inline-block;
+    color: #FFFFFF;
+}
+.status p {
+    color: #FFFFFF;
+}
+</style>
+
+</head>
+<body>
+    <div class="body">
+        <div class="tweet photo">
+        <div class="overview" >
+            <div class="avatar"></div>
+            <h1>{{status.user.name}} <em>@{{status.user.screen_name}}</em></h1>
+            <div class="status">
+                <p>{{status.text}}</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
