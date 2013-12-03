@@ -32,7 +32,7 @@ def get_by_index(index):
 @app.route("/random/")
 def get_random():
     """
-        Return the main page with the nth most recent status populated
+        Returns a random status
     """
     statuses = retrieve_statuses()
     status = random.choice(statuses)
