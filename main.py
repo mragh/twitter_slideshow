@@ -77,7 +77,7 @@ def choose_image(preferred_status, pool):
     if media:
         targeted_media = media[0]
         image["url"] = targeted_media["media_url"]+":large"
-        image["width"] = targeted_media["sizes"]["large"]["w"],
+        image["width"] = targeted_media["sizes"]["large"]["w"]
         image["height"] = targeted_media["sizes"]["large"]["h"]
     return image
 
