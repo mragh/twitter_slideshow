@@ -1,7 +1,9 @@
+import random
+from urlparse import parse_qs
+
 from flask import Flask, jsonify, render_template
 import requests
 from requests_oauthlib import OAuth1
-from urlparse import parse_qs
 import settings
 
 app = Flask(__name__)
@@ -20,9 +22,23 @@ def get_by_index(index):
     """
     statuses = retrieve_statuses()
     last_post = statuses[index]
-    image = choose_image(last_post)
+    image = choose_image(last_post, statuses)
     model = {"title": "Twitter Feed", 
             "status":last_post,
+            "image":image,
+    }
+    return render_template('index.html', **model)
+
+@app.route("/random/")
+def get_random():
+    """
+        Return the main page with the nth most recent status populated
+    """
+    statuses = retrieve_statuses()
+    status = random.choice(statuses)
+    image = choose_image(status, statuses)
+    model = {"title": "Twitter Feed", 
+            "status":status,
             "image":image,
     }
     return render_template('index.html', **model)
@@ -48,17 +64,21 @@ def retrieve_statuses():
     print request.headers
     return request.json()['statuses']
 
-def choose_image(status):
-    media = status["entities"].get("media", None)
+def choose_image(preferred_status, pool):
+    image = {}
+    media = preferred_status["entities"].get("media", None)
+
+    if not media:
+        for status in random.sample(pool, len(pool)):
+            if 'media' in status["entities"]:
+                media = status["entities"]['media']
+                break
+
     if media:
         targeted_media = media[0]
-        image = {
-                    "url" : targeted_media["media_url"]+":large",
-                    "width": targeted_media["sizes"]["large"]["w"],
-                    "height": targeted_media["sizes"]["large"]["h"],
-                }
-    else:
-        image = {}
+        image["url"] = targeted_media["media_url"]+":large"
+        image["width"] = targeted_media["sizes"]["large"]["w"],
+        image["height"] = targeted_media["sizes"]["large"]["h"]
     return image
 
 def get_oauth():
