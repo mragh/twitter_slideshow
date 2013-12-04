@@ -25,9 +25,6 @@ html {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4000000', endColorstr='#26000000',GradientType=0 ); /* IE6-9 */
 }
 .photo {
-    width: {{image.width}}px;
-    height: {{image.height}}px;
-    background: #3E3E50 url({{image.url}});
     background-size: 100%
 }
 .avatar {
@@ -44,20 +41,26 @@ html {
 .status p {
     color: #FFFFFF;
 }
+#tweet-photo {
+    cursor: pointer;
+}
 </style>
 
 </head>
 <body>
     <div class="body">
-        <div class="tweet photo">
+        <div class="tweet photo" id="tweet-photo" style="width: {{image.width}}px;
+    height: {{image.height}}px;
+    background: #3E3E50 url({{image.url}});">
         <div class="overview" >
             <div class="avatar"></div>
-            <h1>{{status.user.name}} <em>@{{status.user.screen_name}}</em></h1>
+            <h1><span class="user_name">{{status.user.name}}</span> <em>@<span class="screen_name">{{status.user.screen_name}}</span></em></h1>
             <div class="status">
                 <p>{{status.text}}</p>
             </div>
         </div>
     </div>
     </div>
+    <script src="/static/dart/main.dart.js" type="text/javascript"></script>
 </body>
 </html>

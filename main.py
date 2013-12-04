@@ -26,7 +26,7 @@ def get_by_index(index):
     model = {"title": "Twitter Feed", 
             "status":last_post,
             "image":image,
-    }
+            }
     return render_template('index.html', **model)
 
 @app.route("/random/")
@@ -43,21 +43,33 @@ def get_random():
     }
     return render_template('index.html', **model)
 
-@app.route("/last/")
-def get_last_status():
-    """
-        Get JSON record of last status
-    """
-    statuses = retrieve_statuses()
-    return jsonify(statuses[0])
-
-@app.route("/last/<int:index>")
+@app.route("/status/<int:index>")
 def get_status_by_index(index):
     """
         Get JSON record of nth last status
     """
     statuses = retrieve_statuses()
-    return jsonify(statuses[index])
+    chosen_status = statuses[index]
+    image = choose_image(chosen_status, statuses)
+    model = {"title": "Twitter Feed", 
+            "status":chosen_status,
+            "image":image,
+            }
+    return jsonify(model)
+
+@app.route("/status/random")
+def get_random_status():
+    """
+        Get JSON record of nth last status
+    """
+    statuses = retrieve_statuses()
+    chosen_status = random.choice(statuses)
+    image = choose_image(chosen_status, statuses)
+    model = {"title": "Twitter Feed", 
+            "status":chosen_status,
+            "image":image,
+            }
+    return jsonify(model)
 
 def retrieve_statuses():
     request = requests.get(url=settings.TWITTER_ENDPOINT, auth=get_oauth())
